@@ -14,7 +14,6 @@ const UserSchema = mongoose.Schema(
         fullName:{
             type:String,
             required:true
-
         },
         gender:{
             type:String,
