@@ -15,32 +15,46 @@ const Navbar = () => {
   }
 
   return (
-    <nav className="m- p-3 flex bg-white justify-between items-center">
+    <nav className=" mr-12 p-3 flex bg-gray-300 justify-between items-center">
       <a href="/" className="flex gap-2 items-center">
         <img className="object-cover h-20 w-20" src={logoImage} alt="" />
-        <span className="text-lg font-bold font-display ">Exam Snap</span>
+        <span className="text-lg text-[#00df9a] font-bold font-display ">
+          Exam Snap
+        </span>
       </a>
 
       <div className="hidden lg:flex gap-12">
-        <a href="/" className="font-bold hover:text-blue-700">
+        <a
+          href="/"
+          className="font-semibold hover:bg-[#00df9a] hover:text-white border  rounded-md px-4 py-2 transition duration-300"
+        >
           Home
         </a>
-        <a href="/details" className="font-bold hover:text-blue-700">
+        <a
+          href="/details"
+          className="font-semibold hover:bg-black hover:text-white border rounded-2xl px-4 py-2 transition duration-300"
+        >
           Details
         </a>
 
-        <a href="/about" className="font-bold hover:text-blue-700">
+        <a
+          href="/about"
+          className="font-semibold hover:bg-black hover:text-white border  rounded-md px-4 py-2 transition duration-300"
+        >
           About
         </a>
 
-        <a href="/profile" className="font-bold hover:text-blue-700">
+        <a
+          href="/profile"
+          className="font-semibold hover:bg-black hover:text-white border rounded-md px-4 py-2 transition duration-300"
+        >
           Profile
         </a>
       </div>
 
       <a
         href="/profile"
-        className="hidden lg:flex gap-2 items-center border border-blue-500 px-6 py-2 rounded-lg hover:border-blue-900"
+        className="hidden lg:flex gap-2 items-center border hover:bg-black hover:text-white rounded-2xl px-4 py-2 transition duration-300"
       >
         <img src={profile} className="max-w-12 max-h-12" alt="" />
         Profile

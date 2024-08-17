@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Profile from "./pages/Profile";
 import Details from "./pages/Details";
+import PageNotFound from "./pages/PageNotFound";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Route path="/about" element={<About />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/details" element={<Details />} />
+      <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
 }
