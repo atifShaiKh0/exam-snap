@@ -5,7 +5,11 @@ const Profile = () => {
   return (
     <div>
       <Navbar />
-      <div className="font-bold text-5xl">This is Profile Page</div>
+      <div>
+        <p className="font-bold text-white text-2xl">Atif Shaikh</p>
+      </div>
+
+      <div className="font-bold text-5xl"></div>
     </div>
   );
 };
