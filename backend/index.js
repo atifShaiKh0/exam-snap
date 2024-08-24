@@ -1,14 +1,15 @@
 import express from "express";
 import mongoose from "mongoose";
-import UserRoutes from "./Routes/Users.routes.js";
-import cors from 'cors'
+import UserRoutes from "./Routes/Users.route.js";
+import CourseRoute from "./Routes/Courses.route.js";
+import cors from 'cors';
 
 
 const app = express()
 app.use(cors());
 app.use(express.json())
 
-mongoose.connect("mongodb+srv://maatif881:YieA6kVp72Ui8h2D@examsnap.igzpdqi.mongodb.net/")
+mongoose.connect("mongodb+srv://aabidhussainpas:n5APJX2vLc8JNv0j@cluster0.jnsu0.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
     .then(() => {
         console.log("connected")
         // running the server
@@ -21,3 +22,4 @@ mongoose.connect("mongodb+srv://maatif881:YieA6kVp72Ui8h2D@examsnap.igzpdqi.mong
     })
 
 app.use("/user",UserRoutes)
+app.use("/course",CourseRoute)
