@@ -9,19 +9,25 @@ import Profile from "./pages/Profile";
 import Details from "./pages/Details";
 import PageNotFound from "./pages/PageNotFound";
 import FolderList from "./components/folder/FolderList";
+import ProtectedRoute from "./ProtectedRoute.jsx";
+import { AuthProvider } from "./authContext";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/about" element={<About />} />
-      <Route path="/profile" element={<Profile />} />
-      <Route path="/details" element={<Details />} />
-      <Route path="/subject" element={<FolderList />} />
-      <Route path="*" element={<PageNotFound />} />
-    </Routes>
+    <AuthProvider>
+      <ProtectedRoute>
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/subject" element={<FolderList />} />
+        <Route path="/details" element={<Details />} />
+      </ProtectedRoute>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/about" element={<About />} />
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
+    </AuthProvider>
   );
 }
 
