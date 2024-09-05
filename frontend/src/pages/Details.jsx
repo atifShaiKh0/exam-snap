@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { toast } from "react-toastify";
+import axios from 'axios'
 
 const Details = ({ addUserSubmit }) => {
   const [username, setUsername] = useState("");
@@ -17,22 +18,28 @@ const Details = ({ addUserSubmit }) => {
   const navigate = useNavigate();
 
   const submitForm = (e) => {
-    e.preventDefault();
-
-    const userInfo = {
-      username,
-      course,
-      year,
-      sem,
-      type,
-      college,
-    };
-
-    addUserSubmit(userInfo);
-
-    toast.success("Job Added Successfully");
-
-    return navigate("/");
+    try {
+      
+      e.preventDefault();
+  
+      const API_URL = 'http://127.0.0.1:5000/api/users/createUser';
+      const userInfo = {
+        username,
+        course,
+        year,
+        sem,
+        type,
+        college,
+      };
+  
+      addUserSubmit(userInfo);
+  
+      toast.success("Job Added Successfully");
+  
+      return navigate("/");
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   return (

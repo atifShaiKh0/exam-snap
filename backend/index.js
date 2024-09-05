@@ -21,5 +21,5 @@ mongoose.connect("mongodb+srv://aabidhussainpas:n5APJX2vLc8JNv0j@cluster0.jnsu0.
         console.log(e)
     })
 
-app.use("/user",UserRoutes)
-app.use("/course",CourseRoute)
+app.use("/api/users",UserRoutes)
+app.use("/api/courses",CourseRoute)
