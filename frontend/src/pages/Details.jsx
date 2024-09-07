@@ -6,6 +6,7 @@ import axios from "axios";
 
 const Details = ({ addUserSubmit }) => {
   const [username, setUsername] = useState("");
+  const [gender, setGender] = useState("");
   const [course, setCourse] = useState("B.tech");
   const [year, setYear] = useState("");
   const [sem, setSem] = useState("");
@@ -16,6 +17,26 @@ const Details = ({ addUserSubmit }) => {
   const [contactPhone, setContactPhone] = useState("");
 
   const navigate = useNavigate();
+
+
+  const submitForm = (e) => {
+    e.preventDefault();
+
+    const userInfo = {
+      username,
+      course,
+      gender,
+      year,
+      sem,
+      type,
+      college,
+    };
+
+    addUserSubmit(userInfo);
+
+    toast.success("Details Submitted!");
+
+    return navigate("/");
 
   const submitForm = async (e) => {
     try {
@@ -122,6 +143,7 @@ const Details = ({ addUserSubmit }) => {
                   <option value="b.tech">B.Tech</option>
                   <option value="bba">BBA</option>
                   <option value="mca">MCA</option>
+                  <option value="bca">BCA</option>
                 </select>
 
                 <label className="block mt-2 text-gray-700 font-bold mb-2">
@@ -139,6 +161,23 @@ const Details = ({ addUserSubmit }) => {
                   <option value="1">1st</option>
                   <option value="2">2nd</option>
                   <option value="3">3rd</option>
+                </select>
+
+                <label className="block mt-2 text-gray-700 font-bold mb-2">
+                  Gender
+                </label>
+                <select
+                  id="gender"
+                  name="gender"
+                  className="border bg-black rounded w-full py-2 px-3"
+                  required
+                  value={gender}
+                  onChange={(e) => setGender(e.target.value)}
+                >
+                  <option value="">select</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="others">Others</option>
                 </select>
 
                 <label
@@ -160,27 +199,6 @@ const Details = ({ addUserSubmit }) => {
                   <option value="2">2nd</option>
                   <option value="3">3rd</option>
                   <option value="4">4th</option>
-                </select>
-              </div>
-
-              <div className="mb-4">
-                <label
-                  htmlFor="description"
-                  className="block text-gray-700 font-bold mb-2"
-                >
-                  Student Type
-                </label>
-                <select
-                  id="type"
-                  name="type"
-                  className="border bg-black rounded w-full py-2 px-3"
-                  required
-                  value={type}
-                  onChange={(e) => setType(e.target.value)}
-                >
-                  <option value="">select</option>
-                  <option value="hosteller">Hosteller</option>
-                  <option value="day-scholar">Day Scholar</option>
                 </select>
               </div>
 
