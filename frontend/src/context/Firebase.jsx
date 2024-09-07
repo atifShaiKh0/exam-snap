@@ -27,7 +27,7 @@ export const useFirebase = () => useContext(FirebaseContext);
 
 export const firebaseApp = initializeApp(firebaseConfig);
 
-const firebaseAuth = getAuth(firebaseApp);
+export const firebaseAuth = getAuth(firebaseApp);
 
 const googleProvider = new GoogleAuthProvider();
 

@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import FolderItem from "./FolderItem";
 import Navbar from "../Navbar";
+import axios from "axios";
 
-const FolderList = () => {
-  const folderList = [
+const FolderList =  () => {
+  const [folderList,setFolderList] = useState([
     {
       id: 1,
       name: "Automata",
@@ -28,7 +29,24 @@ const FolderList = () => {
       id: 6,
       name: "COA",
     },
-  ];
+  ])
+
+  useEffect(()=>{
+    const fetchData = async() =>{
+      try {
+        
+        const API_URL = `http://127.0.0.1:5000/api/courses/getCourse?name=B.Tech`;
+        const response = await axios
+          .get(API_URL)
+        console.log(response.data.semesters[0].subjects)
+        setFolderList(response.data.semesters[0].subjects)
+      } catch (error) {
+        console.log(error);
+      }
+
+    }
+    fetchData();
+  },[])
   return (
     <>
       <Navbar />
@@ -38,9 +56,9 @@ const FolderList = () => {
         </h2>
 
         <div className="grid sm:grid-cols-1 lg:grid-cols-3 gap-4 cursor-pointer mt-3">
-          {folderList.map((item) => (
+          {folderList.map((subject) => (
             <div>
-              <FolderItem folder={item} />
+              <FolderItem folder={subject} />
             </div>
           ))}
         </div>

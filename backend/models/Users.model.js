@@ -15,7 +15,7 @@ const UserSchema = mongoose.Schema(
             type:String,
             required:true
         },
-        gender:{
+        studentType:{
             type:String,
             required:true
         },
@@ -30,6 +30,10 @@ const UserSchema = mongoose.Schema(
         phoneNumber:{
             type:Number,
             required:true     
+        },
+        college:{
+            type:String,
+
         }
 
 
