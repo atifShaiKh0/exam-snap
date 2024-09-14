@@ -19,25 +19,7 @@ const Details = ({ addUserSubmit }) => {
   const navigate = useNavigate();
 
 
-  const submitForm = (e) => {
-    e.preventDefault();
-
-    const userInfo = {
-      username,
-      course,
-      gender,
-      year,
-      sem,
-      type,
-      college,
-    };
-
-    addUserSubmit(userInfo);
-
-    toast.success("Details Submitted!");
-
-    return navigate("/");
-
+  
   const submitForm = async (e) => {
     try {
       e.preventDefault();

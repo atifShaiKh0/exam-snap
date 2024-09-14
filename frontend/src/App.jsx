@@ -11,14 +11,17 @@ import PageNotFound from "./pages/PageNotFound";
 import FolderList from "./components/folder/FolderList";
 import ProtectedRoute from "./ProtectedRoute.jsx";
 import { AuthProvider } from "./authContext";
+import Admin from "./pages/Admin.jsx";
 
 function App() {
   return (
     <AuthProvider>
       <ProtectedRoute>
+        <Routes>
         <Route path="/profile" element={<Profile />} />
         <Route path="/subject" element={<FolderList />} />
         <Route path="/details" element={<Details />} />
+        </Routes>
       </ProtectedRoute>
       <Routes>
         <Route path="/" element={<Home />} />
@@ -26,6 +29,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/about" element={<About />} />
         <Route path="*" element={<PageNotFound />} />
+        <Route path="/admin" element={<Admin />} />
+
       </Routes>
     </AuthProvider>
   );
