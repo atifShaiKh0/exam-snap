@@ -7,8 +7,8 @@ const router = express.Router();
 
 
 router.get('/fetch-file', async (req, res) => {
-    const fileId = '11TC21M3uD3Ka7CW-HtzH8fpO52k7IfkH'; // Replace with your actual file ID
-    const apiKey = 'AIzaSyCUbvwiquSUFWEynLO0ZWG84lhSwMFGFoo'; // Replace with your API key
+    const fileId = ''; // Replace with your actual file ID
+    const apiKey = ''; // Replace with your API key
   
     const url = `https://www.googleapis.com/drive/v3/files/${fileId}?alt=media&key=${apiKey}`;
   
