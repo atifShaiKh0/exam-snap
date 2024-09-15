@@ -12,6 +12,7 @@ import FolderList from "./components/folder/FolderList";
 import ProtectedRoute from "./ProtectedRoute.jsx";
 import { AuthProvider } from "./authContext";
 import Admin from "./pages/Admin.jsx";
+import Test from "./pages/Test.jsx";
 
 function App() {
   return (
@@ -30,6 +31,8 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="*" element={<PageNotFound />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/test" element={<Test />} />
+
 
       </Routes>
     </AuthProvider>

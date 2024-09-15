@@ -1,29 +1,26 @@
-// pdfRoutes.js
+// Routes/UnitsPDF.route.js
 import express from 'express';
-import multer from 'multer';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import {getAllPdfs,deletePdf,uploadPdf} from '../controller/UnitsPDF.controller.js';
+import axios from 'axios'
 
 const router = express.Router();
 
-// Get the directory name of the current module
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
-// Configure multer for file upload
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, 'uploads'));
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname));
-  }
-});
-const upload = multer({ storage });
 
-router.post('/upload', upload.single('file'), uploadPdf);
-router.get('/pdfs', getAllPdfs);
-router.delete('/pdfs/:id', deletePdf);
+router.get('/fetch-file', async (req, res) => {
+    const fileId = '11TC21M3uD3Ka7CW-HtzH8fpO52k7IfkH'; // Replace with your actual file ID
+    const apiKey = 'AIzaSyCUbvwiquSUFWEynLO0ZWG84lhSwMFGFoo'; // Replace with your API key
+  
+    const url = `https://www.googleapis.com/drive/v3/files/${fileId}?alt=media&key=${apiKey}`;
+  
+    try {
+        console.log(90)
+      const response = await axios.get(url, { responseType: 'arraybuffer' });
+      res.set('Content-Type', response.headers['content-type']);
+      res.send(response.data);
+    } catch (error) {
+      res.status(500).send('Error fetching file');
+    }
+  });
+
 
 export default router;

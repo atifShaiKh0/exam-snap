@@ -9,6 +9,13 @@ export default function Admin() {
     semesters: [],
   });
 
+
+  // State for file metadata
+  const [fileMetadata, setFileMetadata] = useState({
+    title: "",
+    description: "",
+  });
+
   // Handle form submission
   const submitCourse = async (e) => {
     e.preventDefault(); // Prevent default form submission
@@ -29,13 +36,18 @@ export default function Admin() {
     // Create an array of semesters based on the number of semesters
     const newSemesters = Array.from({ length: noOfSemesters }, (_, i) => ({
       semester_no: i + 1,
-      no_of_subject: noOfSemesters,
+      no_of_subject: 0,
       subjects: [
         {
-          sub_name: "",
-          no_of_units: 0,
-          units: [{}],
-        },
+          sub_name: '', // Set the subject name
+          no_of_unit: 0, // Initialize units
+          units: [
+            {
+              unit_number: 0,
+              unit: 0,
+            },
+          ], // Initialize units array
+        }
       ],
     }));
     // Update the course details state with the new number of semesters and semester array
@@ -50,11 +62,14 @@ export default function Admin() {
   // Handle change in subjects for a specific semester
   const handleSubjectsChange = (e, semester_no) => {
     const subjectsInput = e.target.value;
+    const no_of_sub = subjectsInput.split(",").length
+
+    console.log(no_of_sub)
     // Split the input by commas and trim spaces
     const subjectsArray = subjectsInput.split(",").map((subject) => {
       return {
         sub_name: subject.trim(), // Set the subject name
-        no_of_units: 0, // Initialize units
+        no_of_unit: 0, // Initialize units
         units: [
           {
             unit_number: 0,
@@ -69,10 +84,15 @@ export default function Admin() {
       ...prevState,
       semesters: prevState.semesters.map((sem) =>
         sem.semester_no === semester_no
-          ? { ...sem, subjects: subjectsArray } // Update subjects
+          ? { ...sem, 
+            no_of_subject:subjectsArray.length,
+            subjects: subjectsArray
+           } // Update subjects
           : sem
       ),
     }));
+
+
   };
   const handleSubjectNameChange = (e, semester_no, subjectIndex) => {
     const inputValue = e.target.value;
@@ -80,11 +100,11 @@ export default function Admin() {
     // Extract the subject name and units from the input
     const [subjectName, unitsString] = inputValue; // Assuming units are separated by a '|'
     const unitsArray = unitsString
-      ? unitsString.split(",").map((unit, i) => ({
-          unit_number: i + 1,
-          unit: unit.trim() || "", // Default to empty string if unit is undefined
-        }))
-      : [];
+    ? unitsString.split(",").map((unit, i) => ({
+      unit_number: i + 1,
+      unit: unit, // Default to empty string if unit is undefined
+    }))
+    : [unitsString];
 
     setCourseDetails((prevState) => ({
       ...prevState,
@@ -95,8 +115,7 @@ export default function Admin() {
               subjects: sem.subjects.map((sub, index) =>
                 index === subjectIndex
                   ? {
-                      ...sub,
-                      sub_name: subjectName.trim(), // Update subject name
+                      ...sub, // Update subject name
                       units: unitsArray,
                     }
                   : sub
@@ -107,8 +126,13 @@ export default function Admin() {
     }));
   };
 
-  const handleFileUpload = (e, semester_no, subjectIndex, unitIndex) => {
+  const handleFileUpload = async (e, semester_no, subjectIndex, unitIndex) => {
     const file = e.target.files[0]; // Get the uploaded file
+    if(file){
+
+      await uploadFile(file,"title")
+    }
+      
     if (file) {
       // Update the state with the uploaded file
       setCourseDetails((prevState) => ({
@@ -139,7 +163,27 @@ export default function Admin() {
     }
   };
   
-  
+  // PDF upload to backend
+  const uploadFile = async (file,title) => {
+
+    if (!file ) {
+      alert("Please provide a file and title.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('title', title);
+    formData.append('description', 'fileMetadata.description');
+
+    try {
+      await axios.post('http://localhost:8000/api/pdf/upload', file);
+      alert('File uploaded successfully');
+    } catch (error) {
+      console.error('Error uploading file:', error);
+      alert('Failed to upload file');
+    }
+  };
 
   return (
     <div>
@@ -204,7 +248,7 @@ export default function Admin() {
                   htmlFor={`subject-${semester.semester_no}-${index}`}
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  Subject {index + 1} Units
+                  Subject {subject.sub_name} Units
                 </label>
                 <input
                   type="text"
@@ -229,6 +273,7 @@ export default function Admin() {
               id={`unit-${semester.semester_no}-${index}-${unitIndex}`}
               className="block w-full text-sm text-gray-500 file:py-2 file:px-4 file:border file:border-gray-300 file:rounded-l-md file:bg-gray-50 file:text-sm file:font-medium focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
               onChange={(e) => handleFileUpload(e, semester.semester_no, index, unitIndex)}
+              name="pdf"
             />
                   </div>
                 ))}
